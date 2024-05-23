@@ -18,7 +18,7 @@ variable "billing_account" {
   description = "Billing account id. If billing account is not part of the same org set `is_org_level` to `false`. To disable handling of billing IAM roles set `no_iam` to `true`."
   type = object({
     id           = string
-    is_org_level = optional(bool, true)
+    is_org_level = optional(bool, false)
     no_iam       = optional(bool, false)
   })
   nullable = false
@@ -104,12 +104,12 @@ variable "factories_config" {
 variable "fast_features" {
   description = "Selective control for top-level FAST features."
   type = object({
-    data_platform   = optional(bool, false)
+    data_platform   = optional(bool, true)
     gcve            = optional(bool, false)
-    gke             = optional(bool, false)
-    project_factory = optional(bool, false)
-    sandbox         = optional(bool, false)
-    teams           = optional(bool, false)
+    gke             = optional(bool, true)
+    project_factory = optional(bool, true)
+    sandbox         = optional(bool, true)
+    teams           = optional(bool, true)
   })
   default  = {}
   nullable = false

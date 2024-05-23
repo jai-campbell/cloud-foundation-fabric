@@ -19,11 +19,11 @@
 locals {
   # only map when the first character would not work
   _region_cardinal = {
-    southeast = "se"
+    europe-west1 = "ew1"
   }
   # only map when the first character would not work
   _region_geo = {
-    australia = "o"
+    euroupe = "e"
   }
   # split in [geo, cardinal, number] tokens
   _region_tokens = {

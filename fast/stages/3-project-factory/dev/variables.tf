@@ -21,7 +21,7 @@ variable "billing_account" {
   description = "Billing account id. If billing account is not part of the same org set `is_org_level` to false."
   type = object({
     id           = string
-    is_org_level = optional(bool, true)
+    is_org_level = optional(bool, false)
   })
   validation {
     condition     = var.billing_account.is_org_level != null

@@ -1,19 +1,3 @@
-/**
- * Copyright 2024 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 locals {
   attached_disks = {
     for disk in var.attached_disks :
@@ -129,6 +113,7 @@ resource "google_compute_region_disk" "disks" {
   name          = "${var.name}-${each.key}"
   type          = each.value.options.type
   size          = each.value.size
+  
   # image         = each.value.source_type == "image" ? each.value.source : null
   snapshot = each.value.source_type == "snapshot" ? each.value.source : null
   labels = merge(var.labels, {
@@ -162,7 +147,7 @@ resource "google_compute_instance" "default" {
   enable_display            = var.enable_display
   labels                    = var.labels
   metadata                  = var.metadata
-  resource_policies         = local.ischedule_attach
+  
 
   dynamic "attached_disk" {
     for_each = local.attached_disks_zonal
@@ -355,13 +340,15 @@ resource "google_compute_instance_template" "default" {
   labels                = var.labels
   resource_manager_tags = local.tags_combined
 
+  
+
   disk {
     auto_delete           = var.boot_disk.auto_delete
     boot                  = true
     disk_size_gb          = var.boot_disk.initialize_params.size
     disk_type             = var.boot_disk.initialize_params.type
     resource_manager_tags = var.tag_bindings
-    source_image          = var.boot_disk.initialize_params.image
+    source_image          = "debian-cloud/debian-10"
   }
 
   dynamic "confidential_instance_config" {
@@ -390,7 +377,7 @@ resource "google_compute_instance_template" "default" {
         config.value.source_type == "image" ? config.value.source : null
       )
       source = (
-        config.value.source_type == "attach" ? config.value.source : null
+        config.value.source_type == "attach" ? config.value.source : "debian-cloud/debian-10"
       )
       disk_name = (
         config.value.source_type != "attach" ? config.value.name : null

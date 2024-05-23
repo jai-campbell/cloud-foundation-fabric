@@ -23,9 +23,7 @@ module "projects" {
     # more defaults are available, check the project factory variables
   }
   data_merges = {
-    labels = {
-      environment = "dev"
-    }
+    
     services = [
       "stackdriver.googleapis.com"
     ]

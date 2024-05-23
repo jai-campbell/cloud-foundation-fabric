@@ -109,8 +109,5 @@ module "billing-account" {
   source = "../billing-account"
   count  = var.factories_config.budgets == null ? 0 : 1
   id     = var.factories_config.budgets.billing_account
-  budget_notification_channels = (
-    var.factories_config.budgets.notification_channels
-  )
-  budgets = local.budgets
+
 }

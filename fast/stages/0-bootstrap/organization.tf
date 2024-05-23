@@ -104,16 +104,7 @@ import {
     !var.org_policies_config.import_defaults || var.bootstrap_user != null
     ? toset([])
     : toset([
-      "compute.requireOsLogin",
-      "compute.skipDefaultNetworkCreation",
-      "compute.vmExternalIpAccess",
-      "iam.allowedPolicyMemberDomains",
-      "iam.automaticIamGrantsForDefaultServiceAccounts",
-      "iam.disableServiceAccountKeyCreation",
-      "iam.disableServiceAccountKeyUpload",
-      "sql.restrictAuthorizedNetworks",
-      "sql.restrictPublicIp",
-      "storage.uniformBucketLevelAccess",
+   
     ])
   )
   id = "organizations/${var.organization.id}/policies/${each.key}"

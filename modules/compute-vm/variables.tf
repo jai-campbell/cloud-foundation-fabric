@@ -80,6 +80,28 @@ variable "attached_disks" {
   }
 }
 
+variable "config" {
+  description = "Configuration for the VM instance"
+  type = object({
+    value = object({
+      options = object({
+        mode = string
+      })
+      source_type = string
+      source = string
+    })
+  })
+  default = {
+    value = {
+      options = {
+        mode = "READ_WRITE"
+      }
+      source_type = "image"
+      source = "debian-cloud/debian-10"
+    }
+  }
+}
+
 variable "boot_disk" {
   description = "Boot disk properties."
   type = object({
@@ -87,7 +109,7 @@ variable "boot_disk" {
     snapshot_schedule = optional(string)
     source            = optional(string)
     initialize_params = optional(object({
-      image = optional(string, "projects/debian-cloud/global/images/family/debian-11")
+      image = optional(string, "debian-10-buster-v20240515")
       size  = optional(number, 10)
       type  = optional(string, "pd-balanced")
     }))
